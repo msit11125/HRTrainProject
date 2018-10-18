@@ -39,7 +39,7 @@ namespace HRTrainProject.Web.Controllers
             _env = env;
 
             // 把Photo上傳目錄設為：wwwroot\UploadFolder\UserPhotos
-            photoDirectory = $@"{ _env.WebRootPath}\UploadFolder\UserPhotos";
+            photoDirectory = $@"{ _env.WebRootPath}/UploadFolder/UserPhotos";
 
         }
 
