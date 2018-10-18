@@ -1,0 +1,29 @@
+﻿@{
+    var status = TempData["Status"];
+    var statusMessage = TempData["StatusMessage"];
+}
+
+@if (status != null)
+{
+    if ((bool)status)
+    {
+        if (statusMessage != null)
+        {
+            <script>
+                toastr.options.positionClass = "toast-bottom-right";
+                toastr.success("@(Html.Raw(statusMessage.ToString().Replace("\r\n", "<br/>")))");
+            </script>
+        }
+    }
+    else
+    {
+        if (statusMessage != null)
+        {
+            <script>
+                toastr.options.positionClass = "toast-bottom-right";
+                toastr.error("@(Html.Raw(statusMessage.ToString().Replace("\r\n", "<br/>")))");
+            </script>
+        }
+    }
+}
+

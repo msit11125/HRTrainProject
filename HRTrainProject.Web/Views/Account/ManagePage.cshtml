@@ -1,0 +1,118 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@using Microsoft.AspNetCore.Html
+
+@model HRTrainProject.Core.ViewModels.AccountManagePageViewModel
+
+@{
+    ViewData["Title"] = "ManagePage";
+}
+
+@functions {
+    /// <summary>
+    /// 排序表單欄位@Helper
+    /// </summary>
+    /// <param name="displayName">顯示欄位名稱</param>
+    /// <param name="orderColumn">實際排序欄位名稱</param>
+    /// <returns></returns>
+    IHtmlContent CreateSortLink(string displayName, string orderColumn)
+    {
+        var NextSortBy = Model.SortBy; //下次排序
+        if (Model.SortBy == HRTrainProject.Core.SortBy.DESC)
+        {
+            if (orderColumn == Model.OrderColumn)
+            {
+                displayName += " ▼";
+                NextSortBy = HRTrainProject.Core.SortBy.ASC;
+            }
+        }
+        else
+        {
+            if (orderColumn == Model.OrderColumn)
+            {
+                displayName += " ▲";
+                NextSortBy = HRTrainProject.Core.SortBy.DESC;
+            }
+        }
+        return Html.ActionLink(displayName, "ManagePage", "Account", new
+        {
+            Page = 1,
+            SearchName = Model.SearchName,
+            OrderColumn = orderColumn,
+            SortBy = NextSortBy
+        });
+    }
+}
+
+
+@using (Html.BeginForm("ManagePage", "Account", FormMethod.Get))
+{
+    @Html.HiddenFor(m => m.OrderColumn)
+    @Html.HiddenFor(m => m.SortBy)
+    <div class="ui small form">
+        <h4 class="ui dividing header">帳號管理</h4>
+        <div class="fields">
+            <div class="field">
+                <label>姓名</label>
+                @Html.EditorFor(m => m.SearchName, new { htmlAttributes = new { placeholder = "" } })
+            </div>
+        </div>
+
+        <button type="submit" class="ui submit button">查詢</button>
+        <a href="@Url.Action("ManagePage")" class="ui submit button">清除</a>
+    </div>
+}
+
+<br />
+
+<a href="@Url.Action("Add")" class="ui primary button"> <i class="icon add"></i>新增一筆</a>
+
+@if (Model.UserList != null && Model.UserList.Count > 0)
+{
+    <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().UserNo), "UserNo")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().Name), "Name")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().EMail), "EMail")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().Phone), "Phone")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().ChgDate), "ChgDate")</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.UserList)
+            {
+                <tr>
+                    <td>@user.UserNo</td>
+                    <td>@user.Name</td>
+                    <td>@user.EMail</td>
+                    <td>@user.Phone</td>
+                    <td>@user.ChgDate</td>
+                    <td><a href="@Url.Action("Edit", new { userNo = user.UserNo })" class="ui green basic button">編輯</a></td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="6">
+                    <div class="ui right floated pagination menu">
+                        @(Html.PagedListPager((IPagedList)Model.UserList,
+                                        page => Url.Action("ManagePage", new
+                                        {
+                                            Page = page,
+                                            SearchName = Model.SearchName,
+                                            OrderColumn = Model.OrderColumn,
+                                            SortBy = Model.SortBy
+                                        }), X.PagedList.Mvc.Common.PagedListRenderOptions.ClassicPlusFirstAndLast) )
+                    </div>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+
+}
+else
+{
+    <div>查詢不到任何一筆資料。</div>
+}

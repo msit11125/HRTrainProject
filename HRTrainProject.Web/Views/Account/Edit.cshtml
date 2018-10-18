@@ -1,0 +1,79 @@
+﻿@model UserEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+@using (Html.BeginForm("Edit", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div class="ui small form">
+    <div class="fields">
+        <div class="field">
+            <label>@Html.DisplayNameFor(m => m.UserNo)</label>
+            @Html.EditorFor(m => m.UserNo, new { htmlAttributes = new { @readonly = "readonly" } })
+        </div>
+    </div>
+    <div class="fields">
+        <div class="field">
+            <label>@Html.DisplayNameFor(m => m.Name)</label>
+            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "" } })
+        </div>
+    </div>
+    <div class="fields">
+        <div class="field">
+            <label>@Html.DisplayNameFor(m => m.EMail)</label>
+            @Html.EditorFor(m => m.EMail, new { htmlAttributes = new { placeholder = ""} })
+        </div>
+    </div>
+    <div class="fields">
+        <div class="field">
+            <label>@Html.DisplayNameFor(m => m.Address)</label>
+            @Html.EditorFor(m => m.Address, new { htmlAttributes = new { placeholder = "" } })
+        </div>
+    </div>
+    <div class="fields">
+        <div class="field">
+            <label>@Html.DisplayNameFor(m => m.Phone)</label>
+            @Html.EditorFor(m => m.Phone, new { htmlAttributes = new { placeholder = "" } })
+        </div>
+    </div>
+    <div class="fields">
+        <div class="field">
+            <label>@Html.DisplayNameFor(m => m.Photo)</label>
+            @Html.EditorFor(m => m.Photo, new { htmlAttributes = new { placeholder = "", type = "file", accept = "image/x-png,image/gif,image/jpeg" } })
+        </div>
+    </div>
+    <div>
+        @if (!string.IsNullOrEmpty(Model.Photo))
+        {
+            <img src="@Url.Action("GetPhotoImage","Account",new { photo = Model.Photo })" class="ui medium bordered image" />
+        }
+    </div>
+    <div>權限:</div>
+    @for (int i = 0; i < Model.Roles.Count; i++)
+    {
+        @Html.HiddenFor(m => Model.Roles[i].ROLE_NAME);
+        @Html.HiddenFor(m => Model.Roles[i].ROLE_ID);
+        @Html.HiddenFor(m => Model.Roles[i].ROLE_TYPE);
+        @Html.HiddenFor(m => Model.Roles[i].CHG_DATE);
+        @Html.HiddenFor(m => Model.Roles[i].CHG_PERSON);
+        @Html.HiddenFor(m => Model.Roles[i].DEFAULT_YN);
+        <div>
+            @Html.CheckBoxFor(m => Model.Roles[i].CHECKED, new { htmlAttributes = new { } })
+            @Model.Roles[i].ROLE_NAME
+        </div>
+    }
+    <br />
+    <a class="ui left labeled icon button big basic" href="@Url.Action("ManagePage")">
+        <i class="left arrow icon"></i>
+        回上頁
+    </a>
+    <button type="submit" class="ui left labeled submit button big basic primary icon button">
+        <i class="save icon"></i>
+        修改完成
+    </button>
+</div>
+}
+
+

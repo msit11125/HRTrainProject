@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HRTrainProject</title>
+
+    <link rel="stylesheet" type="text/css" href="~/vendor/semantic-ui-css/semantic.min.css">
+    <link rel="stylesheet" href="~/vendor/toastr/build/toastr.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("css", required: false)
+
+</head>
+<body>
+    <div class="ui inverted huge borderless fixed fluid menu">
+        <a class="header item">@ViewBag.Title</a>
+        <div class="right menu">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a asp-area="" asp-controller="Account" asp-action="ManagePage" class="item"><i class="cube icon"></i>個人資料</a>
+            }
+            <a href="#" class="ui right floated dropdown item">
+                語系 <i class="dropdown icon"></i>
+                <div class="menu">
+                    <div class="item" onclick="window.location.href='@Url.Action("SetLanguage", "Home", new { culture ="en-GB", returnUrl = @Context.Request.Path})'">English</div>
+                    <div class="item" onclick="window.location.href='@Url.Action("SetLanguage", "Home", new { culture ="zh-TW", returnUrl = @Context.Request.Path})'">繁體中文</div>
+
+                </div>
+            </a>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a asp-area="" asp-controller="Account" asp-action="Login" class="item floated">登入</a>
+            }
+            else
+            {
+                <label class="ui light yellow small header item floated"> <i class="child icon"></i>@User.Identity.Name</label>
+                <a asp-area="" asp-controller="Account" asp-action="Logout" class="item floated">登出</a>
+            }
+        </div>
+    </div>
+    <div class="ui grid">
+
+        <div class="row">
+            <div class="column" id="sidebar">
+                <div class="ui secondary vertical fluid menu">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="item"><i class="home icon"></i>首頁</a>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-area="" asp-controller="Account" asp-action="ManagePage" class="item"><i class="cube icon"></i>帳號維護</a>
+                    }
+
+                    <a asp-area="" asp-controller="Home" asp-action="About" class="item"><i class="cube icon"></i>關於</a>
+                </div>
+            </div>
+            <div class="column" id="content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+    <script src="~/vendor/toastr/build/toastr.min.js" asp-append-version="true"></script>
+    <script src="~/vendor/semantic-ui-css/semantic.min.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $('.ui.dropdown')
+            .dropdown();
+    </script>
+
+    <partial name="_CookieConsentPartial" />
+    <partial name="_Notice" />
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

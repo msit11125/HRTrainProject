@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+
+@{
+    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner = !consentFeature?.CanTrack ?? false;
+    var cookieString = consentFeature?.CreateConsentCookie();
+}
+
+@if (showBanner)
+{
+    <script>
+        toastr.options.positionClass = "toast-bottom-full-width";
+        toastr.options.timeOut = "0";
+        toastr.options.extendedTimeOut = "0";
+        toastr.options.closeButton = true;
+        toastr.warning("為確保您的最佳體驗，本網站使用Cookies。<br>This website uses cookies to ensure you get the best experience on our website. <br>");
+        (function () {
+            // 電腦幫忙註冊cookie
+            document.cookie = '@cookieString';
+        })();
+    </script>
+}

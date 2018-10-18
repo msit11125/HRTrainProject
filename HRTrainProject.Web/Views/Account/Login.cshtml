@@ -1,0 +1,75 @@
+﻿@model LogInModel
+@inject IHtmlLocalizer<SharedResource> sharedLocalizer
+
+@{
+    ViewData["Title"] = "Login";
+}
+<div class="ui middle aligned aligned grid container">
+    <div class="column">
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, htmlAttributes: new { @class = "ui form large" }))
+        {
+            <div class="ui teal header">User Login</div>
+            <div class="ui stacked segment">
+                <div class="field">
+                    @Html.LabelFor(m => m.UserNo)
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        @Html.EditorFor(m => m.UserNo, new { htmlAttributes = new { placeholder = "" } })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.UserNo)
+                </div>
+                <div class="field">
+                    @Html.LabelFor(m => m.Password)
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        @Html.EditorFor(m => m.Password, new { htmlAttributes = new { placeholder = "" } })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Password)
+
+                </div>
+                <div>
+                    <button type="submit" class="ui fluid large teal submit button">Login</button>
+                </div>
+
+            </div>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="ui red small header">@Html.ValidationMessage("LoginError")</div>
+            }
+
+            <div class="ui error message"></div>
+
+            <div class="ui message">
+                New to us? <a href="#">註冊</a>
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts{
+<script>
+        $(document)
+            .ready(function () {
+                $('.ui.form')
+                    .form({
+                        fields: {
+                            email: {
+                                identifier: 'UserNo',
+                                rules: [
+                                    {
+                                        type: 'empty',
+                                        prompt: 'UserName is required.'
+                                    },
+                                    {
+                                        type: 'maxLength[20]',
+                                        prompt: '最多20個字元'
+                                    }
+                                ]
+                            },
+                        }
+                    })
+                    ;
+            });
+</script>
+}

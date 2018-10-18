@@ -1,0 +1,49 @@
+﻿#sidebar {
+    position: fixed;
+    top: 51.8px;
+    left: 0;
+    bottom: 0;
+    width: 14%;
+    background-color: #f5f5f5;
+    padding: 0px;
+}
+
+#sidebar .ui.menu {
+    margin: 2em 0 0;
+    font-size: 20px;
+}
+
+#content {
+    margin-left: 15%;
+    width: 85%;
+    margin-top: 3em;
+    padding-left: 3em;
+    float: left;
+}
+
+    #content > .ui.grid {
+        padding-right: 4em;
+        padding-bottom: 3em;
+    }
+
+    #content h1 {
+        font-size: 36px;
+    }
+
+    #content .ui.divider:not(.hidden) {
+        margin: 0;
+    }
+
+    #content table.ui.table {
+        border: none;
+    }
+
+        #content table.ui.table thead th {
+            border-bottom: 2px solid #eee !important;
+        }
+
+.toast-warning{
+    background-color:#4f4f4f;
+
+}
+
