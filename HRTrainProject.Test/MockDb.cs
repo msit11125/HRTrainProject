@@ -1,6 +1,6 @@
 ﻿using HRTrainProject.Core.Models;
 using HRTrainProject.DAL;
-using HRTrainProject.Interfaces;
+using HRTrainProject.Services.Interfaces;
 using HRTrainProject.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -36,13 +36,13 @@ namespace HRTrainProject.Test
         /// <param name="context"></param>
         public static void Seed(HRTrainDbContext context)
         {
-            var hrmtList = new List<Hrmt01>()
+            var hrmtList = new List<HRMT01>()
             {
-                new Hrmt01(){ UserNo="0000", Name="SuperMan", Password = "1234"},
-                new Hrmt01(){ UserNo="0001", Name="Man", Password = "1234"}
+                new HRMT01(){ USER_NO="0000", NAME="SuperMan", PASSWORD = "1234"},
+                new HRMT01(){ USER_NO="0001", NAME="Man", PASSWORD = "1234"}
             };
 
-            context.Hrmt01.AddRange(hrmtList);
+            context.HRMT01.AddRange(hrmtList);
             context.SaveChanges();
         }
 

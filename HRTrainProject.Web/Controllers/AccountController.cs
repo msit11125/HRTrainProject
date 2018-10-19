@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using HRTrainProject.Interfaces;
+using HRTrainProject.Services.Interfaces;
 using HRTrainProject.Core.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -38,7 +38,7 @@ namespace HRTrainProject.Web.Controllers
             this._localizer = localizer;
             _env = env;
 
-            // 把Photo上傳目錄設為：wwwroot\UploadFolder\UserPhotos
+            // 把Photo上傳目錄設為：wwwroot/UploadFolder/UserPhotos (linux 路徑為正斜線)
             photoDirectory = $@"{ _env.WebRootPath}/UploadFolder/UserPhotos";
 
         }
@@ -68,12 +68,12 @@ namespace HRTrainProject.Web.Controllers
             // 要存的資訊: 看要存字串還是json
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, findUser.UserNo),
-                new Claim(ClaimTypes.NameIdentifier, findUser.UserNo),
-                new Claim(ClaimTypes.MobilePhone, findUser.Phone ?? "")
+                new Claim(ClaimTypes.Name, findUser.USER_NO),
+                new Claim(ClaimTypes.NameIdentifier, findUser.USER_NO),
+                new Claim(ClaimTypes.MobilePhone, findUser.PHONE ?? "")
             };
             var roles = findUser.Roles
-                .Select(r => new Claim(ClaimTypes.Role, LogicCenter.GetEnumName(r.RoleId)));
+                .Select(r => new Claim(ClaimTypes.Role, LogicCenter.GetEnumName(r.ROLE_ID)));
             
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             identity.AddClaims(claims);
@@ -93,8 +93,6 @@ namespace HRTrainProject.Web.Controllers
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
                     new AuthenticationProperties { IsPersistent = true, ExpiresUtc = timeSpanOffset });
             }
-
-            Thread.CurrentPrincipal = principal;
 
             return Redirect(returnUrl ?? Url.Action("Index", "Home"));
         }
@@ -135,10 +133,10 @@ namespace HRTrainProject.Web.Controllers
             //File Upload
             if (photo != null && photo.Count > 0)
             {
-                string prefix = model.UserNo + "_";
+                string prefix = model.USER_NO + "_";
                 FileRepository fileRepo = new FileRepository();
                 await fileRepo.UploadPhoto(photo, photoDirectory, prefix);
-                model.Photo = prefix + photo.FirstOrDefault().FileName;
+                model.PHOTO = prefix + photo.FirstOrDefault().FileName;
             }
 
             string changerNo = HttpContext.User.Identity.GetClaimValue(ClaimTypes.NameIdentifier);
@@ -171,10 +169,10 @@ namespace HRTrainProject.Web.Controllers
             //File Upload
             if (photo != null && photo.Count>0)
             {
-                string prefix = model.UserNo + "_";
+                string prefix = model.USER_NO + "_";
                 FileRepository fileRepo = new FileRepository();
                 await fileRepo.UploadPhoto(photo, photoDirectory, prefix);
-                model.Photo = prefix + photo.FirstOrDefault().FileName;
+                model.PHOTO = prefix + photo.FirstOrDefault().FileName;
             }
 
             string changerNo = HttpContext.User.Identity.GetClaimValue(ClaimTypes.NameIdentifier);

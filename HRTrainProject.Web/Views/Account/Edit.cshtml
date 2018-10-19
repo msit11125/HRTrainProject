@@ -10,44 +10,44 @@
 <div class="ui small form">
     <div class="fields">
         <div class="field">
-            <label>@Html.DisplayNameFor(m => m.UserNo)</label>
-            @Html.EditorFor(m => m.UserNo, new { htmlAttributes = new { @readonly = "readonly" } })
+            <label>@Html.DisplayNameFor(m => m.USER_NO)</label>
+            @Html.EditorFor(m => m.USER_NO, new { htmlAttributes = new { @readonly = "readonly" } })
         </div>
     </div>
     <div class="fields">
         <div class="field">
-            <label>@Html.DisplayNameFor(m => m.Name)</label>
-            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { placeholder = "" } })
+            <label>@Html.DisplayNameFor(m => m.NAME)</label>
+            @Html.EditorFor(m => m.NAME, new { htmlAttributes = new { placeholder = "" } })
         </div>
     </div>
     <div class="fields">
         <div class="field">
-            <label>@Html.DisplayNameFor(m => m.EMail)</label>
-            @Html.EditorFor(m => m.EMail, new { htmlAttributes = new { placeholder = ""} })
+            <label>@Html.DisplayNameFor(m => m.E_MAIL)</label>
+            @Html.EditorFor(m => m.E_MAIL, new { htmlAttributes = new { placeholder = "" } })
         </div>
     </div>
     <div class="fields">
         <div class="field">
-            <label>@Html.DisplayNameFor(m => m.Address)</label>
-            @Html.EditorFor(m => m.Address, new { htmlAttributes = new { placeholder = "" } })
+            <label>@Html.DisplayNameFor(m => m.ADDRESS)</label>
+            @Html.EditorFor(m => m.ADDRESS, new { htmlAttributes = new { placeholder = "" } })
         </div>
     </div>
     <div class="fields">
         <div class="field">
-            <label>@Html.DisplayNameFor(m => m.Phone)</label>
-            @Html.EditorFor(m => m.Phone, new { htmlAttributes = new { placeholder = "" } })
+            <label>@Html.DisplayNameFor(m => m.PHONE)</label>
+            @Html.EditorFor(m => m.PHONE, new { htmlAttributes = new { placeholder = "" } })
         </div>
     </div>
     <div class="fields">
         <div class="field">
-            <label>@Html.DisplayNameFor(m => m.Photo)</label>
-            @Html.EditorFor(m => m.Photo, new { htmlAttributes = new { placeholder = "", type = "file", accept = "image/x-png,image/gif,image/jpeg" } })
+            <label>@Html.DisplayNameFor(m => m.PHOTO)</label>
+            @Html.EditorFor(m => m.PHOTO, new { htmlAttributes = new { placeholder = "", type = "file", accept = "image/x-png,image/gif,image/jpeg" } })
         </div>
     </div>
     <div>
-        @if (!string.IsNullOrEmpty(Model.Photo))
+        @if (!string.IsNullOrEmpty(Model.PHOTO))
         {
-            <img src="@Url.Action("GetPhotoImage","Account",new { photo = Model.Photo })" class="ui medium bordered image" />
+            <img src="@Url.Action("GetPhotoImage","Account",new { photo = Model.PHOTO })" class="ui medium bordered image" />
         }
     </div>
     <div>權限:</div>
@@ -64,6 +64,12 @@
             @Model.Roles[i].ROLE_NAME
         </div>
     }
+
+    <br/>
+        <div class="">
+            <i class="edit icon"></i>
+            更新日期: @Model.CHG_DATE?.ToString("yyyy/MM/dd")
+        </div>
     <br />
     <a class="ui left labeled icon button big basic" href="@Url.Action("ManagePage")">
         <i class="left arrow icon"></i>

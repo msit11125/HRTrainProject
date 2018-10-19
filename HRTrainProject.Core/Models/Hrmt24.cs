@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace HRTrainProject.Core.Models
 {
-    public partial class Hrmt24
+    public partial class HRMT24
     {
-        public string RoleId { get; set; }
-        public string RoleName { get; set; }
-        public string ChgPerson { get; set; }
-        public DateTime? ChgDate { get; set; }
-        public int? RoleType { get; set; }
-        public decimal? RoleLevel { get; set; }
+        public string ROLE_ID { get; set; }
+        public string ROLE_NAME { get; set; }
+        public string CHG_PERSON { get; set; }
+        public DateTime? CHG_DATE { get; set; }
+        public int? ROLE_TYPE { get; set; }
+        public decimal? ROLE_LEVEL { get; set; }
     }
 }

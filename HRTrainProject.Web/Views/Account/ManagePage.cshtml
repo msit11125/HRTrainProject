@@ -72,11 +72,11 @@
     <table class="ui celled table">
         <thead>
             <tr>
-                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().UserNo), "UserNo")</th>
-                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().Name), "Name")</th>
-                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().EMail), "EMail")</th>
-                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().Phone), "Phone")</th>
-                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().ChgDate), "ChgDate")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().USER_NO), "USER_NO")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().NAME), "NAME")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().E_MAIL), "E_MAIL")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().PHONE), "PHONE")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().CHG_DATE), "CHG_DATE")</th>
                 <th></th>
             </tr>
         </thead>
@@ -84,12 +84,12 @@
             @foreach (var user in Model.UserList)
             {
                 <tr>
-                    <td>@user.UserNo</td>
-                    <td>@user.Name</td>
-                    <td>@user.EMail</td>
-                    <td>@user.Phone</td>
-                    <td>@user.ChgDate</td>
-                    <td><a href="@Url.Action("Edit", new { userNo = user.UserNo })" class="ui green basic button">編輯</a></td>
+                    <td>@user.USER_NO</td>
+                    <td>@user.NAME</td>
+                    <td>@user.E_MAIL</td>
+                    <td>@user.PHONE</td>
+                    <td>@user.CHG_DATE</td>
+                    <td><a href="@Url.Action("Edit", new { userNo = user.USER_NO })" class="ui green basic button">編輯</a></td>
                 </tr>
             }
         </tbody>

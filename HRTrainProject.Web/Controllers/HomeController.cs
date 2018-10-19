@@ -32,8 +32,8 @@ namespace HRTrainProject.Web.Controllers
         {
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
             UserProfile u = new UserProfile();
-            u.Name = claimsIdentity.Name;
-            u.Phone = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.MobilePhone).FirstOrDefault()?.Value;
+            u.NAME = claimsIdentity.Name;
+            u.PHONE = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.MobilePhone).FirstOrDefault()?.Value;
 
             var hello = ConfigProvider.ConfigManager.HelloWorld;
 

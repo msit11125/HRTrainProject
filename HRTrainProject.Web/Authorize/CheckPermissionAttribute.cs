@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HRTrainProject.Web.Helpers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
@@ -27,18 +29,20 @@ namespace HRTrainProject.Web
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            HttpContext httpContext = filterContext.HttpContext;
+
             Controller control = filterContext.Controller as Controller;
             string BRE_NO = CheckBRE_NO != null ? CheckBRE_NO : control.RouteData.Values["Controller"].ToString();
             string ACTION_ID = CheckACTION_ID != null ? CheckACTION_ID : control.RouteData.Values["action"].ToString();
             
-            if (!CheckDbPermissson(filterContext.HttpContext.User.Identity.GetClaimValue(ClaimTypes.NameIdentifier)))
+            if (!CheckDbPermissson(httpContext.User.Identity.GetClaimValue(ClaimTypes.NameIdentifier)))
             {
-                if (ResultType == "Json")
+                if (ClientHelpers.IsAjaxRequest(httpContext.Request) 
+                    || ClientHelpers.IsApiRequest(httpContext.Request))
                 {
 
                     var data = "{ \"Success\" : \"false\" , \"Error\" : \"您無權異動資料\" }";
                     var JsonResult = new JsonResult(data);
-
 
                     filterContext.Result = JsonResult;
                 }

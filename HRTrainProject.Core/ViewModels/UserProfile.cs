@@ -7,22 +7,22 @@ namespace HRTrainProject.Core.ViewModels
 {
     public class UserProfile
     {
-        public string UserNo { get; set; }
-        public string EMail { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
+        public string USER_NO { get; set; }
+        public string E_MAIL { get; set; }
+        public string ADDRESS { get; set; }
+        public string PHONE { get; set; }
         [Display(Name = "Name")]
-        public string Name { get; set; }
+        public string NAME { get; set; }
 
-        public string Photo { get; set; }
+        public string PHOTO { get; set; }
         public List<UserRoles> Roles { get; set; }
     }
 
     public class UserRoles
     {
-        public UserRole RoleId { get; set; }
-        public string RoleName { get; set; }
-        public int? RoleType { get; set; }
-        public decimal? RoleLevel { get; set; }
+        public UserRole ROLE_ID { get; set; }
+        public string ROLE_NAME { get; set; }
+        public int? ROLE_TYPE { get; set; }
+        public decimal? ROLE_LEVEL { get; set; }
     }
 }

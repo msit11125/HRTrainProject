@@ -30,6 +30,7 @@ Obj/
 .vs/
 /wwwroot/dist/
 /ClientApp/dist/
+UploadFolder/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -183,7 +184,9 @@ ClientBin/
 *.publishsettings
 orleans.codegen.cs
 
-/node_modules
+
+node_modules/
+
 
 /yarn.lock
 
@@ -236,5 +239,3 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 
-# Dependency directories
-node_modules/

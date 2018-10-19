@@ -21,11 +21,11 @@
 	- 更新Db
 	` Update-Database ` 
 	- 讀取MySql
-	` Scaffold-DbContext "Server=localhost;User Id=root;Password=from1992;Database=HRTrainDb" "Pomelo.EntityFrameworkCore.MySql" -OutputDir Models -force ` <br/>
+	` Scaffold-DbContext -UseDatabaseNames "Server=localhost;User Id=root;Password=from1992;Database=HRTrainDb" "Pomelo.EntityFrameworkCore.MySql" -OutputDir Models -force ` <br/>
 	- 讀取SqlServer
-	` Scaffold-DbContext "Server=.\sqlexpress;Database=HRTrainDb;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force ` <br/>
-	` dotnet ef dbcontext scaffold "Server=(localdb)..." -o Models -f ` <br/>
-	` dotnet ef database update `
+	` Scaffold-DbContext -UseDatabaseNames "Server=.\sqlexpress;Database=HRTrainDb;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force ` <br/>
+	` dotnet ef dbcontext scaffold "Server=(localdb)..." -o Models -f -UseDatabaseNames ` <br/>
+	` dotnet ef database update -UseDatabaseNames `
 #### 3. 多國語系
 - 套件:
 `　Microsoft.AspNetCore.Localization ` <br/>

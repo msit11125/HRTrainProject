@@ -11,12 +11,12 @@ namespace HRTrainProject.Service.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<Hrmt01, UserProfile>()
+            CreateMap<HRMT01, UserProfile>()
                 .ForMember(x => x.Roles, opt => opt.Ignore());
 
 
-            CreateMap<UserEditViewModel, Hrmt01>();
-            CreateMap<Hrmt01, UserEditViewModel>();
+            CreateMap<UserEditViewModel, HRMT01>();
+            CreateMap<HRMT01, UserEditViewModel>();
 
             
         }

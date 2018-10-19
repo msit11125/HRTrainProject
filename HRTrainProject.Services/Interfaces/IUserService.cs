@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HRTrainProject.Interfaces
+namespace HRTrainProject.Services.Interfaces
 {
     public interface IUserService
     {

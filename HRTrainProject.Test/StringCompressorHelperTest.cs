@@ -1,6 +1,6 @@
 using HRTrainProject.Core.Models;
 using HRTrainProject.DAL;
-using HRTrainProject.Interfaces;
+using HRTrainProject.Services.Interfaces;
 using HRTrainProject.Services;
 using HRTrainProject.Services.Helpers;
 using Microsoft.EntityFrameworkCore;

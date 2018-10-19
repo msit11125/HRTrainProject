@@ -9,7 +9,7 @@ namespace HRTrainProject.Core.ViewModels
     {
         [Display(Name = "Username")]
         [Required(ErrorMessage = "{0} is required")]
-        public string UserNo { get; set; }
+        public string USER_NO { get; set; }
         [Display(Name = "Password")]
         public string Password { get; set; }
 

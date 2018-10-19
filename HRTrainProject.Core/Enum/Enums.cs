@@ -21,4 +21,11 @@ namespace HRTrainProject.Core
         ASC
     }
 
+    public enum Bulletin_Class_Type
+    {
+        全部 = 0,
+        系統公告 = 1,
+        學校公告 = 2,
+    }
+
 }

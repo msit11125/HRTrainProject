@@ -1,5 +1,5 @@
 ﻿using HRTrainProject.Core.Models;
-using HRTrainProject.Interfaces;
+using HRTrainProject.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

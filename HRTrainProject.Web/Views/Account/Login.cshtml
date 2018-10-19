@@ -11,12 +11,12 @@
             <div class="ui teal header">User Login</div>
             <div class="ui stacked segment">
                 <div class="field">
-                    @Html.LabelFor(m => m.UserNo)
+                    @Html.LabelFor(m => m.USER_NO)
                     <div class="ui left icon input">
                         <i class="user icon"></i>
-                        @Html.EditorFor(m => m.UserNo, new { htmlAttributes = new { placeholder = "" } })
+                        @Html.EditorFor(m => m.USER_NO, new { htmlAttributes = new { placeholder = "" } })
                     </div>
-                    @Html.ValidationMessageFor(m => m.UserNo)
+                    @Html.ValidationMessageFor(m => m.USER_NO)
                 </div>
                 <div class="field">
                     @Html.LabelFor(m => m.Password)
@@ -26,6 +26,12 @@
                     </div>
                     @Html.ValidationMessageFor(m => m.Password)
 
+                </div>
+                <div class="field">
+                    <div class="ui toggle checkbox form-group">
+                        @Html.CheckBoxFor(m => m.RememberMe, new { htmlAttributes = new { } })
+                        <label>Remember Me</label>
+                    </div>
                 </div>
                 <div>
                     <button type="submit" class="ui fluid large teal submit button">Login</button>
