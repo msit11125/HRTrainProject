@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Display" xml:space="preserve">
-    <value>文字</value>
+  <data name="DashBoard" xml:space="preserve">
+    <value>儀表板</value>
   </data>
   <data name="Home Page" xml:space="preserve">
     <value>首頁</value>

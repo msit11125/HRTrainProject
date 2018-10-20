@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="{0} is required" xml:space="preserve">
-    <value>{0} is required</value>
-  </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Username</value>
+    <value>UserName</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="UserAccount" xml:space="preserve">
+    <value>UserAccount</value>
+  </data>
+  <data name="{0} is required" xml:space="preserve">
+    <value>{0} is required</value>
   </data>
 </root>

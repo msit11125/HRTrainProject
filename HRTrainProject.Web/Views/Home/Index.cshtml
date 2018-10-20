@@ -10,14 +10,14 @@
 <div class="ui grid">
     <div class="row">
         <h1 class="ui huge header">
-            儀表板
+            @localizer["DashBoard"]
         </h1>
     </div>
     <div class="ui divider"></div>
     <div class="row">
         <div class="ui four column divided grid">
             <div class="column">
-                <h2>@localizer["Display"]</h2>
+                <h2>說明</h2>
                 <ul>
                     <li>@localizer["TitleContent"]</li>
                 </ul>
@@ -30,7 +30,7 @@
                 </ul>
             </div>
             <div class="column">
-                <h2>個資秀出來</h2>
+                <h2>基本資料</h2>
                 <div>@Html.DisplayNameFor(m => m.NAME) : @Model.NAME</div>
                 <div>@Html.DisplayNameFor(m => m.PHONE) : @Model.PHONE</div>
             </div>

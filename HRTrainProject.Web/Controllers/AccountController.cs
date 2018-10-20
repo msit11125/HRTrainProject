@@ -97,6 +97,7 @@ namespace HRTrainProject.Web.Controllers
             return Redirect(returnUrl ?? Url.Action("Index", "Home"));
         }
 
+        [HttpGet, HttpPost]
         public IActionResult LogOut()
         {
             HttpContext.SignOutAsync();
@@ -107,6 +108,8 @@ namespace HRTrainProject.Web.Controllers
         public IActionResult ManagePage(AccountManagePageViewModel vm)
         {
             var userList =  _userService.GetUserList(vm);
+            vm.RoleSelectList = _userService.GetRoles()
+                .ToSelectList(r => r.ROLE_ID, r => r.ROLE_NAME);
 
             vm.UserList = userList.ToPageList(vm.Page, vm.PageSize);
 
@@ -117,8 +120,9 @@ namespace HRTrainProject.Web.Controllers
         [Authorize(Roles = nameof(UserRole.最大管理者))]
         public IActionResult Add()
         {
-            UserEditViewModel userProfile = _userService.GetUserDetail(null);
-            return View(userProfile);
+            UserEditViewModel userDetail = _userService.GetUserDetailAndRolesAll(null);
+
+            return View(userDetail);
         }
 
         [HttpPost]
@@ -141,7 +145,10 @@ namespace HRTrainProject.Web.Controllers
 
             string changerNo = HttpContext.User.Identity.GetClaimValue(ClaimTypes.NameIdentifier);
 
-            bool state = _userService.AddNewUser(model, out string resultCode, changerNo);
+            model.CHG_DATE = DateTime.Now;
+            model.CHG_PERSON = changerNo;
+
+            bool state = _userService.AddNewUser(model, out string resultCode);
 
             TempData["Status"] = state;
             TempData["StatusMessage"] = _localizer[resultCode].Value;
@@ -153,8 +160,8 @@ namespace HRTrainProject.Web.Controllers
         [Authorize(Roles = nameof(UserRole.最大管理者))]
         public IActionResult Edit(string userNo)
         {
-            UserEditViewModel userProfile = _userService.GetUserDetail(userNo);
-            return View(userProfile);
+            UserEditViewModel userDetail = _userService.GetUserDetailAndRolesAll(userNo);
+            return View(userDetail);
         }
 
         [HttpPost]
@@ -176,8 +183,10 @@ namespace HRTrainProject.Web.Controllers
             }
 
             string changerNo = HttpContext.User.Identity.GetClaimValue(ClaimTypes.NameIdentifier);
+            model.CHG_DATE = DateTime.Now;
+            model.CHG_PERSON = changerNo;
 
-            bool state = _userService.EditUser(model, out string resultCode, changerNo);
+            bool state = _userService.EditUser(model, out string resultCode);
 
             TempData["Status"] = state;
             TempData["StatusMessage"] = _localizer[resultCode].Value;

@@ -9,6 +9,7 @@ namespace HRTrainProject.Core.ViewModels
     {
         [Required]
         [StringLength(20)]
+        [Display(Name = "UserAccount")]
         public string USER_NO { get; set; }
         public string E_MAIL { get; set; }
         public string ADDRESS { get; set; }
@@ -17,9 +18,9 @@ namespace HRTrainProject.Core.ViewModels
         public string NAME { get; set; }
 
         public DateTime? CHG_DATE { get; set; }
+        public string CHG_PERSON { get; set; }
 
         public string PHOTO { get; set; }
-
         public List<RolesViewModel> Roles { get; set; }
     }
 }

@@ -22,12 +22,8 @@ using HRTrainProject.DAL;
 using HRTrainProject.Services;
 using HRTrainProject.Core.Models;
 using HRTrainProject.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using System.Security.Principal;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http.Features;
 using System.Text;
 using HRTrainProject.Web.Helpers;
 

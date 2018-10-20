@@ -21,7 +21,7 @@ namespace HRTrainProject.Services.Interfaces
         /// </summary>
         /// <param name="userNo"></param>
         /// <returns></returns>
-        List<UserRoles> GetUserRoles(string userNo);
+        List<RolesViewModel> GetRoles(string userNo = null);
 
         /// <summary>
         /// 取得 User 列表
@@ -35,25 +35,23 @@ namespace HRTrainProject.Services.Interfaces
         /// </summary>
         /// <param name="userNo"></param>
         /// <returns></returns>
-        UserEditViewModel GetUserDetail(string userNo);
+        UserEditViewModel GetUserDetailAndRolesAll(string userNo);
 
         /// <summary>
         /// 新增User資料
         /// </summary>
         /// <param name="user"></param>
         /// <param name="resultCode">多國代碼</param>
-        /// <param name="changer">異動者</param>
         /// <returns></returns>
-        bool AddNewUser(UserEditViewModel user, out string resultCode, string changer = "");
+        bool AddNewUser(UserEditViewModel user, out string resultCode);
 
         /// <summary>
         /// 修改User資料
         /// </summary>
         /// <param name="user"></param>
         /// <param name="resultCode">多國代碼</param>
-        /// <param name="changer">異動者</param>
         /// <returns></returns>
-        bool EditUser(UserEditViewModel user, out string resultCode, string changer = "");
+        bool EditUser(UserEditViewModel user, out string resultCode);
 
     }
 }

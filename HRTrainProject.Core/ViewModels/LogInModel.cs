@@ -7,7 +7,7 @@ namespace HRTrainProject.Core.ViewModels
 {
     public class LogInModel
     {
-        [Display(Name = "Username")]
+        [Display(Name = "UserAccount")]
         [Required(ErrorMessage = "{0} is required")]
         public string USER_NO { get; set; }
         [Display(Name = "Password")]

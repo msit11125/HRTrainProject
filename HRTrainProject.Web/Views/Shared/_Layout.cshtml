@@ -22,8 +22,11 @@
             <a href="#" class="ui right floated dropdown item">
                 語系 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <div class="item" onclick="window.location.href='@Url.Action("SetLanguage", "Home", new { culture ="en-GB", returnUrl = @Context.Request.Path})'">English</div>
-                    <div class="item" onclick="window.location.href='@Url.Action("SetLanguage", "Home", new { culture ="zh-TW", returnUrl = @Context.Request.Path})'">繁體中文</div>
+                    @{ 
+                        string returnUrl = @Context.Request.Path + @Context.Request.QueryString;
+                    }
+                    <div class="item" onclick="window.location.href='@Url.Action("SetLanguage", "Home", new { culture ="en-GB", returnUrl = returnUrl})'">English</div>
+                    <div class="item" onclick="window.location.href='@Url.Action("SetLanguage", "Home", new { culture ="zh-TW", returnUrl = returnUrl})'">繁體中文</div>
 
                 </div>
             </a>

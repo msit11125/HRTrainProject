@@ -6,7 +6,7 @@ namespace HRTrainProject.Core.ViewModels
 {
     public class RolesViewModel
     {
-        public UserRole ROLE_ID { get; set; }
+        public string ROLE_ID { get; set; }
         public string ROLE_NAME { get; set; }
         public int? ROLE_TYPE { get; set; }
         public decimal? ROLE_LEVEL { get; set; }
