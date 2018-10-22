@@ -1,12 +1,10 @@
 ﻿@model UserEditViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "UserDetail";
 }
 
-<h2>Edit</h2>
-@using (Html.BeginForm("Edit", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+<h2>個人資料</h2>
 <div class="ui small form">
     <div class="fields">
         <div class="field">
@@ -17,25 +15,25 @@
     <div class="fields">
         <div class="field">
             <label>@Html.DisplayNameFor(m => m.NAME)</label>
-            @Html.EditorFor(m => m.NAME, new { htmlAttributes = new { placeholder = "" } })
+            @Html.EditorFor(m => m.NAME, new { htmlAttributes = new { placeholder = "", @readonly = "readonly" } })
         </div>
     </div>
     <div class="fields">
         <div class="field">
             <label>@Html.DisplayNameFor(m => m.E_MAIL)</label>
-            @Html.EditorFor(m => m.E_MAIL, new { htmlAttributes = new { placeholder = "" } })
+            @Html.EditorFor(m => m.E_MAIL, new { htmlAttributes = new { placeholder = "", @readonly = "readonly" } })
         </div>
     </div>
     <div class="fields">
         <div class="field">
             <label>@Html.DisplayNameFor(m => m.ADDRESS)</label>
-            @Html.EditorFor(m => m.ADDRESS, new { htmlAttributes = new { placeholder = "" } })
+            @Html.EditorFor(m => m.ADDRESS, new { htmlAttributes = new { placeholder = "", @readonly = "readonly" } })
         </div>
     </div>
     <div class="fields">
         <div class="field">
             <label>@Html.DisplayNameFor(m => m.PHONE)</label>
-            @Html.EditorFor(m => m.PHONE, new { htmlAttributes = new { placeholder = "" } })
+            @Html.EditorFor(m => m.PHONE, new { htmlAttributes = new { placeholder = "", @readonly = "readonly" } })
         </div>
     </div>
     <div class="fields">
@@ -65,29 +63,7 @@
         </div>
     }
     <br />
-
-    <div class="field">
-        <div class="ui toggle checkbox form-group">
-            @Html.CheckBox("USER_STATUS", new { })
-            <label>啟用</label>
-        </div>
-    </div>
-
-    <br />
-    <div class="">
-        <i class="edit icon"></i>
-        最後更新日期: @Model.CHG_DATE?.ToString(CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern)
-    </div>
-    <br />
-    <a class="ui left labeled icon button big basic" href="@Url.Action("ManagePage")">
-        <i class="left arrow icon"></i>
-        回上頁
-    </a>
-    <button type="submit" class="ui left labeled submit button big basic primary icon button">
-        <i class="save icon"></i>
-        修改完成
-    </button>
+   
 </div>
-}
 
 

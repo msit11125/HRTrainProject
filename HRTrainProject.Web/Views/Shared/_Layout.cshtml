@@ -17,13 +17,14 @@
         <div class="right menu">
             @if (User.Identity.IsAuthenticated)
             {
-                <a asp-area="" asp-controller="Account" asp-action="ManagePage" class="item"><i class="cube icon"></i>個人資料</a>
+                string userNo = Context.User.Identity.GetClaimValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+                <a asp-area="" asp-controller="Account" asp-action="UserDetail" asp-route-userNo="@userNo" class="item"><i class="cube icon"></i>個人資料</a>
             }
             <a href="#" class="ui right floated dropdown item">
                 語系 <i class="dropdown icon"></i>
                 <div class="menu">
-                    @{ 
-                        string returnUrl = @Context.Request.Path + @Context.Request.QueryString;
+                    @{
+                        string returnUrl = Context.Request.Path + Context.Request.QueryString;
                     }
                     <div class="item" onclick="window.location.href='@Url.Action("SetLanguage", "Home", new { culture ="en-GB", returnUrl = returnUrl})'">English</div>
                     <div class="item" onclick="window.location.href='@Url.Action("SetLanguage", "Home", new { culture ="zh-TW", returnUrl = returnUrl})'">繁體中文</div>
@@ -51,6 +52,8 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <a asp-area="" asp-controller="Account" asp-action="ManagePage" class="item"><i class="cube icon"></i>帳號維護</a>
+                        <a asp-area="" asp-controller="Bulletin" asp-action="BulletinPage" class="item"><i class="cube icon"></i>公告欄維護</a>
+
                     }
 
                     <a asp-area="" asp-controller="Home" asp-action="About" class="item"><i class="cube icon"></i>關於</a>

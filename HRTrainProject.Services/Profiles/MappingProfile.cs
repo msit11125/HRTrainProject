@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HRTrainProject.Service.Profiles
+namespace HRTrainProject.Services.Profiles
 {
     public class MappingProfile : Profile
     {

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<BulletinEditViewModel>
+@if (Model != null && Model.Count() > 0)
+{
+    <table class="ui single line striped selectable table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(m => m.FirstOrDefault().CLASS_NAME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.FirstOrDefault().SUBJECT)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.FirstOrDefault().CHG_DATE)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.FirstOrDefault().CHG_PERSON)
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in Model)
+            {
+                <tr>
+                    <td>
+                        @row.CLASS_NAME
+                    </td>
+                    <td>
+                        @if (row.TOP_YN == "Y")
+                        {@Html.Raw(" ☆")}
+
+                        @row.SUBJECT
+
+                        @if (row.TOP_YN == "Y")
+                        {@Html.Raw(" ☆")}
+                    </td>
+                    <td>
+                        @row.CHG_DATE
+                    </td>
+                    <td>
+                        @row.CHG_PERSON
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Detail", "Bulletin", new { bullet_id = row.BULLET_ID })" class="ui blue small basic button">檢視</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="6">
+                    <a href="@Url.Action("BulletinPage", "Bulletin", new { CLASS_TYPE = (int)ViewBag.CLASS_TYPE  })" class="ui blue">More...</a>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+}
+else
+{
+    <div>目前尚未有任何公告。</div>
+}

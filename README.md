@@ -44,9 +44,11 @@
 [參考Blog](https://github.com/NLog/NLog.Web/wiki/Getting-started-with-ASP.NET-Core-2)
 
 #### 6. Semantic-UI
-- Dependency: gulp:  ` npm install -g gulp `
-[參考Blog](https://semantic-ui.com/introduction/getting-started.html)
+[官方文件](https://semantic-ui.com/introduction/getting-started.html)
 
 
 #### 7. X.PagedList
 [參考Blog](https://github.com/dncuug/X.PagedList)
+
+#### 8. ViewComponents
+[MSDN](https://docs.microsoft.com/zh-tw/aspnet/core/mvc/views/view-components?view=aspnetcore-2.1)

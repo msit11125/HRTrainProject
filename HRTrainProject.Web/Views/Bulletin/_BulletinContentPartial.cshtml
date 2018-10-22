@@ -1,0 +1,156 @@
+﻿@model BulletinPageViewModel
+@using X.PagedList.Mvc.Core
+@using X.PagedList
+@using Microsoft.AspNetCore.Html
+
+@functions {
+/// <summary>
+/// 排序表單欄位@Helper
+/// </summary>
+/// <param name="displayName">顯示欄位名稱</param>
+/// <param name="orderColumn">實際排序欄位名稱</param>
+/// <returns></returns>
+IHtmlContent CreateSortLink(string displayName, string orderColumn)
+{
+    var NextSortBy = Model.SortBy; //下次排序
+
+    if (Model.SortBy == HRTrainProject.Core.SortBy.DESC)
+    {
+        if (orderColumn == Model.OrderColumn)
+        {
+            displayName += " ▼";
+            NextSortBy = HRTrainProject.Core.SortBy.ASC;
+        }
+    }
+    else
+    {
+        if (orderColumn == Model.OrderColumn)
+        {
+            displayName += " ▲";
+            NextSortBy = HRTrainProject.Core.SortBy.DESC;
+        }
+    }
+    return Html.ActionLink(displayName, "BulletinPage", "Bulletin", new
+    {
+        Page = 1,
+        Class_Type = Model.CLASS_TYPE,
+        QueryString = Model.QueryString,
+        OrderColumn = orderColumn,
+        SortBy = NextSortBy
+    });
+}
+
+string IsNowActive(int bulletinClassType)
+{
+    return (int)Model.CLASS_TYPE == bulletinClassType ? "active" : "";
+}
+}
+
+
+<div class="ui small form">
+    <h4 class="ui dividing header">公告欄管理</h4>
+    <div class="fields">
+        <div class="field">
+            <a href="@Url.Action("BulletinPage", new { CLASS_TYPE = 1 })"
+               class="ui submit small basic button @(IsNowActive(1))">系統公告</a>
+            <a href="@Url.Action("BulletinPage", new { CLASS_TYPE = 2 })"
+               class="ui submit small basic button @(IsNowActive(2))">學校公告</a>
+        </div>
+    </div>
+    <div class="five fields left">
+        <div class="fields">
+            <div class="field">
+                <label>主題</label>
+                @Html.EditorFor(m => m.QueryString, new { htmlAttributes = new { placeholder = "" } })
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="ui submit button">查詢</button>
+    <a href="@Url.Action("BulletinPage")" class="ui submit button">清除</a>
+</div>
+
+<br />
+
+<a href="@Url.Action("Add")" class="ui primary button"> <i class="icon add"></i>新增一筆</a>
+
+
+@if (Model != null && Model.BulletinList.Count > 0)
+{
+    <table class="ui single line striped selectable table">
+        <thead>
+            <tr>
+                <th>
+                    @CreateSortLink(@Html.DisplayNameFor(m => m.BulletinList.FirstOrDefault().CLASS_NAME), "CLASS_NAME")
+                </th>
+                <th>
+                    @CreateSortLink(@Html.DisplayNameFor(m => m.BulletinList.FirstOrDefault().SUBJECT), "SUBJECT")
+                </th>
+                <th>
+                    @CreateSortLink(@Html.DisplayNameFor(m => m.BulletinList.FirstOrDefault().CHG_DATE), "CHG_DATE")
+                </th>
+                <th>
+                    @CreateSortLink(@Html.DisplayNameFor(m => m.BulletinList.FirstOrDefault().CHG_PERSON), "CHG_PERSON")
+                </th>
+                <th>
+                    @CreateSortLink(@Html.DisplayNameFor(m => m.BulletinList.FirstOrDefault().TOP_YN), "TOP_YN")
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in Model.BulletinList)
+            {
+                <tr>
+                    <td>
+                        @row.CLASS_NAME
+                    </td>
+                    <td>
+                        @row.SUBJECT
+                    </td>
+                    <td>
+                        @row.CHG_DATE
+                    </td>
+                    <td>
+                        @row.CHG_PERSON
+                    </td>
+                    <td>
+                        @row.TOP_YN
+                    </td>
+                    <td>
+                        @if (Model.HasPermission(HRTrainProject.Core.BtnPermission.Edit))
+                        {
+                            <a href="@Url.Action("Edit", new {  })" class="ui green basic button">編輯</a>
+                        }
+                        @if (Model.HasPermission(HRTrainProject.Core.BtnPermission.Delete))
+                        {
+                            <a href="@Url.Action("Delete", new {  })" class="ui red basic button">刪除</a>
+                        }
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="6">
+                    <div class="ui right floated pagination menu">
+                        @(Html.PagedListPager((IPagedList)Model.BulletinList,
+                                                                                                page => Url.Action("BulletinPage", new
+                                                                                                {
+                                                                                                    Page = page,
+                                                                                                    Class_Type = Model.CLASS_TYPE,
+                                                                                                    QueryString = Model.QueryString,
+                                                                                                    OrderColumn = Model.OrderColumn,
+                                                                                                    SortBy = Model.SortBy
+                                                                                                }), X.PagedList.Mvc.Common.PagedListRenderOptions.ClassicPlusFirstAndLast) )
+                    </div>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+}
+else
+{
+    <div>查詢不到任何一筆資料。</div>
+}

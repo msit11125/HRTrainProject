@@ -1,0 +1,16 @@
+﻿@model BulletinPageViewModel
+@{
+    ViewData["Title"] = "BulletinPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("BulletinPage", "Bulletin", FormMethod.Get))
+{
+    @Html.HiddenFor(m => m.OrderColumn)
+    @Html.HiddenFor(m => m.SortBy)
+    @Html.HiddenFor(m => m.CLASS_TYPE)
+
+
+   @await Html.PartialAsync("_BulletinContentPartial", Model)
+}
+

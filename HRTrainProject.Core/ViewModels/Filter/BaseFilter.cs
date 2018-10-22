@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HRTrainProject.Core.ViewModels.Filter
@@ -34,6 +35,24 @@ namespace HRTrainProject.Core.ViewModels.Filter
         /// </summary>
         public SortBy SortBy { get; set; }
 
-        
+        /// <summary>
+        /// 按鈕權限
+        /// </summary>
+        public List<BtnPermission> BtnPermissions { get; set; }
+
+        /// <summary>
+        /// 檢查有無此權限
+        /// </summary>
+        /// <param name="btnPermission">權限按鈕代碼</param>
+        /// <returns></returns>
+        public bool HasPermission(BtnPermission btnPermission)
+        {
+            return this.BtnPermissions.Any(b => b == btnPermission);
+        }
+
+        public BaseFilter()
+        {
+            BtnPermissions = new List<BtnPermission>();
+        }
     }
 }

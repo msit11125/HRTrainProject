@@ -157,6 +157,13 @@ namespace HRTrainProject.Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult UserDetail(string userNo)
+        {
+            UserEditViewModel userDetail = _userService.GetUserDetailAndRolesAll(userNo);
+            return View(userDetail);
+        }
+
+        [HttpGet]
         [Authorize(Roles = nameof(UserRole.最大管理者))]
         public IActionResult Edit(string userNo)
         {

@@ -22,5 +22,7 @@ namespace HRTrainProject.Core.ViewModels
 
         public string PHOTO { get; set; }
         public List<RolesViewModel> Roles { get; set; }
+
+        public byte? USER_STATUS { get; set; }
     }
 }

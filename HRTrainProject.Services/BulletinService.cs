@@ -20,14 +20,14 @@ namespace HRTrainProject.Services
             this._unitOfWork = unitOfWork;
         }
 
-        public List<BulletinRow> GetAllBulletin(GetAllBulletinFilter filter)
+        public List<BulletinEditViewModel> GetAllBulletin(GetAllBulletinFilter filter)
         {
-            var queryBulletin = _unitOfWork.Db.Database.GetDbConnection().Query<BulletinRow>
+            var queryBulletin = _unitOfWork.Db.Database.GetDbConnection().Query<BulletinEditViewModel>
                 (@"
                       select b2L.BULLET_ID, b2L.SUBJECT, b2.CLASS_TYPE, b1L.CLASS_NAME, 
-                      b2.S_DATE, b2.E_DATE, b2.TOP_YN, b2.ISPUBLISH, b1L.LANGUAGE_ID
-                      , b2L.CRE_PERSON, b2L.CHG_DATE, b2L.CRE_PERSON, b2L.CHG_PERSON,
-                      b2.PUSH_YN from BET02_LANG b2L
+                      b2.S_DATE, b2.E_DATE, b2.TOP_YN, b2.ISPUBLISH, b1L.LANGUAGE_ID, 
+                      b2L.CRE_PERSON, b2L.CHG_DATE, b2L.CRE_PERSON, b2L.CHG_PERSON 
+                      from BET02_LANG b2L
                       left join BET02 b2 on b2L.BULLET_ID = b2.BULLET_ID
                       left join BET01_LANG b1L on b2.CLASS_TYPE = b1L.CLASS_TYPE
                       where b1L.CLASS_TYPE = @CLASS_TYPE and b2L.LANGUAGE_ID = @LANGUAGE_ID
@@ -40,28 +40,32 @@ namespace HRTrainProject.Services
                 });
 
             // 篩選 ...
-            if (filter.CLASS_TYPE != 0)
+            if (!string.IsNullOrEmpty(filter.QueryString))
             {
-                queryBulletin = queryBulletin
-                    .Where(u => u.CLASS_TYPE == ((int)filter.CLASS_TYPE).ToString());
+                queryBulletin = queryBulletin.Where(b => b.SUBJECT.Contains(filter.QueryString));
             }
-            if (filter.IsMore)
+
+            // On DashBoard ...
+            if (filter.IsOnDashBoard)
             {
                 // 單頁顯示筆數
                 int showCount = _unitOfWork.Db.BET01
                     .Where(b => b.CLASS_TYPE == ((int)filter.CLASS_TYPE).ToString())
                     .FirstOrDefault()?.SHOW_COUNT ?? 0;
 
-                queryBulletin.Take(showCount);
+                queryBulletin = queryBulletin.Take(showCount);
+                queryBulletin = queryBulletin.OrderByDescending(b => b.TOP_YN).ThenByDescending(b => b.CRE_DATE);
+
+                return queryBulletin.ToList();
             }
 
             // 排序 ...
             if (filter.OrderColumn == null) // 預設排序
             {
-                filter.OrderColumn = nameof(BulletinRow.CRE_DATE);
+                filter.OrderColumn = nameof(BulletinEditViewModel.CRE_DATE);
                 filter.SortBy = SortBy.DESC;
             }
-            var propertyInfo = typeof(BulletinRow).GetProperty(filter.OrderColumn);
+            var propertyInfo = typeof(BulletinEditViewModel).GetProperty(filter.OrderColumn);
             if (filter.SortBy == SortBy.ASC)
             {
                 queryBulletin = queryBulletin.OrderBy(x => propertyInfo.GetValue(x, null));
@@ -72,6 +76,37 @@ namespace HRTrainProject.Services
             }
 
             return queryBulletin.ToList();
+        }
+
+        public BulletinEditViewModel GetBulletinDetail(string bullet_id, string language_id, out string resultCode)
+        {
+            var bulletin = _unitOfWork.Db.Database.GetDbConnection().Query<BulletinEditViewModel>
+               (@"
+                      select b2L.BULLET_ID, b2L.SUBJECT, b2.CLASS_TYPE, b1L.CLASS_NAME, 
+                      b2.S_DATE, b2.E_DATE, b2.TOP_YN, b2.ISPUBLISH, b1L.LANGUAGE_ID,
+                      b2L.CRE_PERSON, b2L.CHG_DATE, b2L.CRE_PERSON, b2L.CHG_PERSON ,
+                      b2.MEMO , b2L.CONTENT_TXT 
+                      from BET02_LANG b2L
+                      left join BET02 b2 on b2L.BULLET_ID = b2.BULLET_ID
+                      left join BET01_LANG b1L on b2.CLASS_TYPE = b1L.CLASS_TYPE
+                      where b2L.BULLET_ID = @BULLET_ID and b2L.LANGUAGE_ID = @LANGUAGE_ID
+                      order by TOP_YN, b2L.CRE_DATE desc
+                  "
+               , new
+               {
+                   BULLET_ID = bullet_id,
+                   LANGUAGE_ID = language_id
+               }).FirstOrDefault();
+
+            if(bulletin == null)
+            {
+                resultCode = "bullet_id not existed";
+                return null;
+            }
+
+            resultCode = "get detail success";
+
+            return bulletin;
         }
 
     }

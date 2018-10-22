@@ -6,6 +6,7 @@ namespace HRTrainProject.Services.Interfaces
 {
     public interface IBulletinService
     {
-        List<BulletinRow> GetAllBulletin(GetAllBulletinFilter filter);
+        List<BulletinEditViewModel> GetAllBulletin(GetAllBulletinFilter filter);
+        BulletinEditViewModel GetBulletinDetail(string bullet_id, string language_id, out string resultCode);
     }
 }

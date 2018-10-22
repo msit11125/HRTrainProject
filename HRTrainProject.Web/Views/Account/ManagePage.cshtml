@@ -9,120 +9,119 @@
 }
 
 @functions {
-    /// <summary>
-    /// 排序表單欄位@Helper
-    /// </summary>
-    /// <param name="displayName">顯示欄位名稱</param>
-    /// <param name="orderColumn">實際排序欄位名稱</param>
-    /// <returns></returns>
-    IHtmlContent CreateSortLink(string displayName, string orderColumn)
+/// <summary>
+/// 排序表單欄位@Helper
+/// </summary>
+/// <param name="displayName">顯示欄位名稱</param>
+/// <param name="orderColumn">實際排序欄位名稱</param>
+/// <returns></returns>
+IHtmlContent CreateSortLink(string displayName, string orderColumn)
+{
+    var NextSortBy = Model.SortBy; //下次排序
+
+    if (Model.SortBy == HRTrainProject.Core.SortBy.DESC)
     {
-        var NextSortBy = Model.SortBy; //下次排序
-
-        if (Model.SortBy == HRTrainProject.Core.SortBy.DESC)
+        if (orderColumn == Model.OrderColumn)
         {
-            if (orderColumn == Model.OrderColumn)
-            {
-                displayName += " ▼";
-                NextSortBy = HRTrainProject.Core.SortBy.ASC;
-            }
+            displayName += " ▼";
+            NextSortBy = HRTrainProject.Core.SortBy.ASC;
         }
-        else
-        {
-            if (orderColumn == Model.OrderColumn)
-            {
-                displayName += " ▲";
-                NextSortBy = HRTrainProject.Core.SortBy.DESC;
-            }
-        }
-        return Html.ActionLink(displayName, "ManagePage", "Account", new
-        {
-            Page = 1,
-            Search_Name = Model.Search_Name,
-            Search_RoleId = Model.Search_RoleId,
-            OrderColumn = orderColumn,
-            SortBy = NextSortBy
-        });
     }
+    else
+    {
+        if (orderColumn == Model.OrderColumn)
+        {
+            displayName += " ▲";
+            NextSortBy = HRTrainProject.Core.SortBy.DESC;
+        }
+    }
+    return Html.ActionLink(displayName, "ManagePage", "Account", new
+    {
+        Page = 1,
+        Search_Name = Model.Search_Name,
+        Search_RoleId = Model.Search_RoleId,
+        OrderColumn = orderColumn,
+        SortBy = NextSortBy
+    });
 }
-
+}
 
 @using (Html.BeginForm("ManagePage", "Account", FormMethod.Get))
 {
     @Html.HiddenFor(m => m.OrderColumn)
     @Html.HiddenFor(m => m.SortBy)
-<div class="ui small form">
-    <h4 class="ui dividing header">帳號管理</h4>
-    <div class="five fields left">
-        <div class="fields">
-            <div class="field">
-                <label>姓名</label>
-                @Html.EditorFor(m => m.Search_Name, new { htmlAttributes = new { placeholder = "" } })
+    <div class="ui small form">
+        <h4 class="ui dividing header">帳號管理</h4>
+        <div class="six fields left">
+            <div class="fields">
+                <div class="field">
+                    <label>姓名</label>
+                    @Html.EditorFor(m => m.Search_Name, new { htmlAttributes = new { placeholder = "" } })
+                </div>
+            </div>
+            <div class="fields">
+                <div class="field">
+                    <label>角色</label>
+                    @Html.DropDownListFor(m => m.Search_RoleId, Model.RoleSelectList, "全部", new { })
+                </div>
             </div>
         </div>
-        <div class="fields">
-            <div class="field">
-                <label>角色</label>
-                @Html.DropDownListFor(m => m.Search_RoleId, Model.RoleSelectList, "全部", new { })
-            </div>
-        </div>
-    </div>
         <button type="submit" class="ui submit button">查詢</button>
         <a href="@Url.Action("ManagePage")" class="ui submit button">清除</a>
     </div>
-    }
+}
 
-    <br />
+<br />
 
-    <a href="@Url.Action("Add")" class="ui primary button"> <i class="icon add"></i>新增一筆</a>
+<a href="@Url.Action("Add")" class="ui primary button"> <i class="icon add"></i>新增一筆</a>
 
-    @if (Model.UserList != null && Model.UserList.Count > 0)
-    {
-        <table class="ui celled table">
-            <thead>
+@if (Model.UserList != null && Model.UserList.Count > 0)
+{
+    <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().USER_NO), "USER_NO")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().NAME), "NAME")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().E_MAIL), "E_MAIL")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().PHONE), "PHONE")</th>
+                <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().CHG_DATE), "CHG_DATE")</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.UserList)
+            {
                 <tr>
-                    <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().USER_NO), "USER_NO")</th>
-                    <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().NAME), "NAME")</th>
-                    <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().E_MAIL), "E_MAIL")</th>
-                    <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().PHONE), "PHONE")</th>
-                    <th>@CreateSortLink(@Html.DisplayNameFor(m => m.UserList.FirstOrDefault().CHG_DATE), "CHG_DATE")</th>
-                    <th></th>
+                    <td>@user.USER_NO</td>
+                    <td>@user.NAME</td>
+                    <td>@user.E_MAIL</td>
+                    <td>@user.PHONE</td>
+                    <td>@user.CHG_DATE</td>
+                    <td><a href="@Url.Action("Edit", new { userNo = user.USER_NO })" class="ui green basic button">編輯</a></td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var user in Model.UserList)
-                {
-                    <tr>
-                        <td>@user.USER_NO</td>
-                        <td>@user.NAME</td>
-                        <td>@user.E_MAIL</td>
-                        <td>@user.PHONE</td>
-                        <td>@user.CHG_DATE</td>
-                        <td><a href="@Url.Action("Edit", new { userNo = user.USER_NO })" class="ui green basic button">編輯</a></td>
-                    </tr>
-                }
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th colspan="6">
-                        <div class="ui right floated pagination menu">
-                            @(Html.PagedListPager((IPagedList)Model.UserList,
-                                                    page => Url.Action("ManagePage", new
-                                                    {
-                                                        Page = page,
-                                                        SearchName = Model.Search_Name,
-                                                        Search_RoleId = Model.Search_RoleId,
-                                                        OrderColumn = Model.OrderColumn,
-                                                        SortBy = Model.SortBy
-                                                    }), X.PagedList.Mvc.Common.PagedListRenderOptions.ClassicPlusFirstAndLast) )
-                        </div>
-                    </th>
-                </tr>
-            </tfoot>
-        </table>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="6">
+                    <div class="ui right floated pagination menu">
+                        @(Html.PagedListPager((IPagedList)Model.UserList,
+                                                        page => Url.Action("ManagePage", new
+                                                        {
+                                                            Page = page,
+                                                            SearchName = Model.Search_Name,
+                                                            Search_RoleId = Model.Search_RoleId,
+                                                            OrderColumn = Model.OrderColumn,
+                                                            SortBy = Model.SortBy
+                                                        }), X.PagedList.Mvc.Common.PagedListRenderOptions.ClassicPlusFirstAndLast) )
+                    </div>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
 
-    }
-    else
-    {
-        <div>查詢不到任何一筆資料。</div>
-    }
+}
+else
+{
+    <div>查詢不到任何一筆資料。</div>
+}

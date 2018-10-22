@@ -13,6 +13,7 @@ using HRTrainProject.Core;
 using HRTrainProject.Core.ViewModels.Filter;
 using Microsoft.EntityFrameworkCore;
 using Dapper;
+using HRTrainProject.DAL.Interfaces;
 
 namespace HRTrainProject.Services
 {
@@ -44,6 +45,12 @@ namespace HRTrainProject.Services
             if (o_user == null)
             {
                 resultCode = "notFindUser";
+                return null;
+            }
+
+            if(o_user.USER_STATUS != 1)
+            {
+                resultCode = "account is invalid";
                 return null;
             }
 
@@ -88,8 +95,7 @@ namespace HRTrainProject.Services
             {
                 queryUser = queryUser.Where(u =>
                    _unitOfWork.Db.HRMT25
-                    .Where(ur => ur.USER_NO == u.USER_NO && ur.ROLE_ID == filter.Search_RoleId )
-                    .Any()
+                    .Any(ur => ur.USER_NO == u.USER_NO && ur.ROLE_ID == filter.Search_RoleId )
                 );
             }
 

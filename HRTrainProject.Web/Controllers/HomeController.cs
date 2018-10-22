@@ -16,16 +16,22 @@ using Microsoft.Extensions.Options;
 using HRTrainProject.Core.ViewModels;
 using HRTrainProject.Services.Logics;
 using HRTrainProject.Core;
+using HRTrainProject.Core.ViewModels.Filter;
+using System.Globalization;
+using HRTrainProject.Services.Interfaces;
 
 namespace HRTrainProject.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IStringLocalizer<HomeController> _localizer;
 
-        public HomeController(IStringLocalizer<HomeController> localizer)
+        private readonly IStringLocalizer<HomeController> _localizer;
+        private readonly IBulletinService _bulletinService;
+
+        public HomeController(IStringLocalizer<HomeController> localizer, IBulletinService _bulletinService)
         {
             this._localizer = localizer;
+            this._bulletinService = _bulletinService;
         }
 
         public IActionResult Index()
@@ -35,7 +41,9 @@ namespace HRTrainProject.Web.Controllers
             u.NAME = claimsIdentity.Name;
             u.PHONE = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.MobilePhone).FirstOrDefault()?.Value;
 
-            var hello = ConfigProvider.ConfigManager.HelloWorld;
+            #region Bulletin View Component
+            ViewBag.BulletinClassType = 1;
+            #endregion
 
             return View(u);
         }

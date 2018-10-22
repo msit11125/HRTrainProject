@@ -26,6 +26,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using HRTrainProject.Web.Helpers;
+using HRTrainProject.DAL.Interfaces;
 
 namespace HRTrainProject.Web
 {
@@ -135,6 +136,7 @@ namespace HRTrainProject.Web
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBulletinService, BulletinService>();
 
             // 注入DbContext
             services.AddDbContext<HRTrainDbContext>(options =>

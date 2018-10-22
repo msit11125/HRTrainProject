@@ -1,4 +1,5 @@
 ﻿using HRTrainProject.Core.Models;
+using HRTrainProject.DAL.Interfaces;
 using HRTrainProject.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HRTrainProject.DAL
 {
@@ -51,6 +53,14 @@ namespace HRTrainProject.DAL
             {
                 return query;
             }
+        }
+
+        public Task<List<TEntity>> GetListAsync(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "")
+        {
+            return this.Get(filter, orderBy, includeProperties).ToListAsync();
         }
 
         public virtual TEntity GetByID(object id)
