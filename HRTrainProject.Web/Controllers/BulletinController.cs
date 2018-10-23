@@ -63,5 +63,20 @@ namespace HRTrainProject.Web.Controllers
 
             return View(bulletin);
         }
+
+        public IActionResult Edit(string bullet_id)
+        {
+            string language_id = CultureInfo.CurrentCulture.Name;
+
+            BulletinEditViewModel bulletin = _bulletinService.GetBulletinDetail(bullet_id, language_id, out string resultCode);
+            ViewBag.SelectClassType = _bulletinService.GetAllClassType(language_id).ToSelectList(ct => ct.CLASS_TYPE, ct => ct.CLASS_NAME);
+            if (bulletin == null)
+            {
+                string errorCode = _localizer[resultCode].Value;
+            }
+
+            return View(bulletin);
+        }
+
     }
 }

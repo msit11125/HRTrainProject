@@ -1,17 +1,22 @@
 ﻿@model BulletinEditViewModel
 
-<div class="ui raised very padded text container segment">
-    <h2 class="ui header">@Model.SUBJECT</h2>
-    <p>@Model.CONTENT_TXT</p>
+@if (Model != null)
+{
+    <div class="ui raised very padded text container segment">
 
-    <br /><br />
-    <div class="ui segment right floated">
-        <i class="edit icon"></i>
-        最後更新日期: @Model.CHG_DATE?.ToString(CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern)
+        <h2 class="ui header">@Model.SUBJECT</h2>
+        <p>@Model.CONTENT_TXT</p>
+
+        <br /><br />
+        <div class="ui segment right floated">
+            <i class="edit icon"></i>
+            最後更新日期: @Model.CHG_DATE?.ToString(CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern)
+        </div>
+        <br />
+
+        <button class="ui left labeled icon button basic" onclick="window.history.back()">
+            <i class="left arrow icon"></i>
+            Back 回上頁
+        </button>
     </div>
-    <br />
-    <button class="ui left labeled icon button basic" onclick="window.history.back()">
-        <i class="left arrow icon"></i>
-        Back 回上頁
-    </button>
-</div>
+}

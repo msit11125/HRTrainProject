@@ -1,0 +1,92 @@
+﻿@model BulletinEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@if (Model != null)
+{
+    <h2>Edit</h2>
+    @using (Html.BeginForm("Edit", "Bulletin", FormMethod.Post))
+    {
+    <div class="ui small form">
+        <div class="fields">
+            <div class="field">
+                <label>@Html.DisplayNameFor(m => m.BULLET_ID)</label>
+                @Html.EditorFor(m => m.BULLET_ID, new { htmlAttributes = new { @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>@Html.DisplayNameFor(m => m.CLASS_TYPE)</label>
+                @Html.DropDownListFor(m => m.CLASS_TYPE, (SelectList)ViewBag.SelectClassType, "Please select", new { })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>@Html.DisplayNameFor(m => m.ISPUBLISH)</label>
+                @Html.CheckBox("ISPUBLISH", Model.ISPUBLISH == "Y", new { })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>@Html.DisplayNameFor(m => m.PUSH_YN)</label>
+                @Html.CheckBox("PUSH_YN", Model.PUSH_YN == "Y", new { })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>@Html.DisplayNameFor(m => m.TOP_YN)</label>
+                @Html.CheckBox("TOP_YN", Model.TOP_YN == "Y", new { })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>@Html.DisplayNameFor(m => m.S_DATE)</label>
+                @Html.EditorFor(m => m.S_DATE, new { htmlAttributes = new { placeholder = "" } })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>@Html.DisplayNameFor(m => m.E_DATE)</label>
+                @Html.EditorFor(m => m.E_DATE, new { htmlAttributes = new { placeholder = "" } })
+            </div>
+        </div>        <div class="fields">
+            <div class="field">
+                <label>@Html.DisplayNameFor(m => m.MEMO)</label>
+                @Html.EditorFor(m => m.MEMO, new { htmlAttributes = new { placeholder = "" } })
+            </div>
+        </div>
+        <!--multiple language tab-->
+        <div class="fields">
+            <div class="field">
+                <label>@Html.DisplayNameFor(m => m.SUBJECT)</label>
+                @Html.EditorFor(m => m.SUBJECT, new { htmlAttributes = new { placeholder = "" } })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>@Html.DisplayNameFor(m => m.CONTENT_TXT)</label>
+                @Html.TextAreaFor(m => m.CONTENT_TXT, new { placeholder = "", cols="50"  })
+            </div>
+        </div>
+        <br />
+        <div class="">
+            <i class="edit icon"></i>
+            最後更新日期: @Model.CHG_DATE?.ToString(CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern)
+        </div>
+        <br />
+        <a class="ui left labeled icon button big basic" href="@Url.Action("BulletinPage")">
+            <i class="left arrow icon"></i>
+            回上頁
+        </a>
+        <button type="submit" class="ui left labeled submit button big basic primary icon button">
+            <i class="save icon"></i>
+            修改完成
+        </button>
+    </div>
+    }
+
+
+
+}

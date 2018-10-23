@@ -103,7 +103,7 @@ namespace HRTrainProject.Web.Controllers
             HttpContext.SignOutAsync();
             return RedirectToAction("Login");
         }
-
+        [CheckPermissionAttribute]
         [Authorize(Policy = nameof(PolicyGroup.管理者級別))]
         public IActionResult ManagePage(AccountManagePageViewModel vm)
         {

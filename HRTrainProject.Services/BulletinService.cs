@@ -109,5 +109,16 @@ namespace HRTrainProject.Services
             return bulletin;
         }
 
+        public List<BulletinClassTypeModel> GetAllClassType(string language_id)
+        {
+            var classTypeList = _unitOfWork.Db.BET01_LANG.Where(bl => bl.LANGUAGE_ID == language_id).Select(s => new BulletinClassTypeModel()
+            {
+                CLASS_TYPE = s.CLASS_TYPE,
+                CLASS_NAME = s.CLASS_NAME
+            });
+
+            return classTypeList.ToList();
+        }
+
     }
 }

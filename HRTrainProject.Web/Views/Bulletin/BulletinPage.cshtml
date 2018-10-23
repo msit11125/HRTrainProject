@@ -11,6 +11,40 @@
     @Html.HiddenFor(m => m.CLASS_TYPE)
 
 
-   @await Html.PartialAsync("_BulletinContentPartial", Model)
+    @await Html.PartialAsync("_BulletinContentPartial", Model)
+
+    <div class="ui basic modal">
+        <div class="ui icon header">
+            <i class="archive icon"></i>
+            刪除 Delete
+        </div>
+        <div class="content">
+            <p>確定要刪除 [ <span id="subjectTxt"></span> ] 這筆資料嗎?</p>
+        </div>
+        <div class="actions">
+            <div class="ui red basic cancel inverted button">
+                <i class="remove icon"></i>
+                No
+            </div>
+            <div class="ui green ok inverted button">
+                <i class="checkmark icon"></i>
+                Yes
+            </div>
+        </div>
+    </div>
 }
 
+
+@section scripts{ 
+    <script>
+        $(".deleteBtn").on('click', function () {
+            var bulletid = $(this).data("bulletid");
+
+            var subject = $(this).data("subject");
+            $("#subjectTxt").text(subject);
+
+            $('.ui.basic.modal').modal('show');
+        });
+
+    </script>
+}

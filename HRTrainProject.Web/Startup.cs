@@ -66,7 +66,7 @@ namespace HRTrainProject.Web
                 {
                     if (!(ClientHelpers.IsAjaxRequest(ctx.Request) || ClientHelpers.IsApiRequest(ctx.Request)))
                     {
-                        ctx.Response.Redirect(options.LoginPath);
+                        ctx.Response.Redirect(ctx.RedirectUri);
                         return Task.CompletedTask;
                     }
                     ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;

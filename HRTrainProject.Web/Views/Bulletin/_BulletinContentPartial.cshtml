@@ -119,11 +119,11 @@ string IsNowActive(int bulletinClassType)
                     <td>
                         @if (Model.HasPermission(HRTrainProject.Core.BtnPermission.Edit))
                         {
-                            <a href="@Url.Action("Edit", new {  })" class="ui green basic button">編輯</a>
+                            <a href="@Url.Action("Edit", new { bullet_id = row.BULLET_ID })" class="ui green basic button">編輯</a>
                         }
                         @if (Model.HasPermission(HRTrainProject.Core.BtnPermission.Delete))
                         {
-                            <a href="@Url.Action("Delete", new {  })" class="ui red basic button">刪除</a>
+                            <button type="button" data-bulletid="@row.BULLET_ID" data-subject="@row.SUBJECT" class="deleteBtn ui red basic button">刪除</button>
                         }
                     </td>
 
