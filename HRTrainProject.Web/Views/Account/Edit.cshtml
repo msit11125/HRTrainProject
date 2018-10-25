@@ -7,6 +7,7 @@
 <h2>Edit</h2>
 @using (Html.BeginForm("Edit", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.ValidationSummary()
 <div class="ui small form">
     <div class="fields">
         <div class="field">
@@ -68,7 +69,7 @@
 
     <div class="field">
         <div class="ui toggle checkbox form-group">
-            @Html.CheckBox("USER_STATUS", new { })
+            <input type="checkbox" name="@nameof(Model.USER_STATUS)" @(Model.USER_STATUS == 1? "checked":"") value="1" />
             <label>啟用</label>
         </div>
     </div>
