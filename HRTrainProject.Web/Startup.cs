@@ -43,13 +43,7 @@ namespace HRTrainProject.Web
         public void ConfigureServices(IServiceCollection services)
         {
             #region Authorize
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
+            
             // Add authentication services
             services.AddAuthentication(options =>
             {
@@ -178,7 +172,7 @@ namespace HRTrainProject.Web
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 #if DEBUG
             this.DEVELOP_SEED();
@@ -211,8 +205,6 @@ namespace HRTrainProject.Web
             // Using 多國語系 
             var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(locOptions.Value);
-
-            app.UseCookiePolicy();
 
             app.UseAuthentication();
 

@@ -204,8 +204,15 @@ namespace HRTrainProject.Web.Controllers
         [HttpGet]
         public IActionResult GetPhotoImage(string photo)
         {
-            var image = System.IO.File.OpenRead(System.IO.Path.Combine(photoDirectory, photo));
-            return File(image, "image/jpeg");
+            try
+            {
+                var image = System.IO.File.OpenRead(System.IO.Path.Combine(photoDirectory, photo));
+                return File(image, "image/jpeg");
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
     }
