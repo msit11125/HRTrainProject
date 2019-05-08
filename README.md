@@ -10,18 +10,21 @@
 	- ` npm install <packagename> --save `
 
 #### 2. EntityFrameworkCore
+
 - 套件:
+
 ` DbContext取得Connection: Microsoft.EntityFrameworkCore.Relational ` <br />
 ` Sqlserver: Microsoft.EntityFrameworkCore.SqlServer ` <br/>
 ` Mysql: Pomelo.EntityFrameworkCore.MySql `
 - 指令 (對象專案 HRTrainEF):
+
 	- 新增移轉
 	` Add-Migration InitDB ` <br/>
 	` dotnet ef migrations add InitDB `
 	- 更新Db
 	` Update-Database ` 
 	- 讀取MySql
-	` Scaffold-DbContext -UseDatabaseNames "Server=localhost;User Id=root;Password=from1992;Database=HRTrainDb" "Pomelo.EntityFrameworkCore.MySql" -OutputDir Models -force ` <br/>
+	` Scaffold-DbContext -UseDatabaseNames "Server=localhost;User Id=root;Password=YourPassward;Database=HRTrainDb" "Pomelo.EntityFrameworkCore.MySql" -OutputDir Models -force ` <br/>
 	- 讀取SqlServer
 	` Scaffold-DbContext -UseDatabaseNames "Server=.\sqlexpress;Database=HRTrainDb;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force ` <br/>
 	` dotnet ef dbcontext scaffold "Server=(localdb)..." -o Models -f -UseDatabaseNames ` <br/>
